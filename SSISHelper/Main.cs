@@ -29,7 +29,7 @@ namespace SSISHelper
             // generateFiles();
             GenerateFilesUtil sh = new GenerateFilesUtil();
             sh.pathDirRoot = pathDirRootInput;
-            sh.generateFiles();
+            sh.generateFiles(checkBoxOverride.Checked);
             textOutput.Text += Environment.NewLine + "Completed.";
             textOutput.Text += sh.strResult;
         }

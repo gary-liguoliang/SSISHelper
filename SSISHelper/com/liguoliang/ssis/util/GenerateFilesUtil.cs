@@ -43,8 +43,10 @@ namespace SSISHelper
         // 3. Generate Notify ini file
         // 4. Generate Notify CMD.
 
-        public void generateFiles()
+        Boolean _forceOverride = false;
+        public void generateFiles(Boolean forceOverride)
         {
+            _forceOverride = forceOverride;
             strResult = "";
             prepareFolders();
 
@@ -214,6 +216,11 @@ namespace SSISHelper
 
         private void backupFileIfExists(String pathFile)
         {
+            if (_forceOverride)
+            {
+                return;
+            }
+
             if (File.Exists(pathFile))
             {
                 File.Copy(pathFile, pathFile + ".Backup@" + DateTime.Now.ToFileTimeUtc());
