@@ -18,7 +18,7 @@ using System.IO;
 using System.Collections;
 using Microsoft.SqlServer.Dts.Runtime;
 
-namespace SSISHelper
+namespace SSISHelper.com.liguoliang.ssis.util
 {
     class GenerateFilesUtil
     {
@@ -104,7 +104,7 @@ namespace SSISHelper
 
                 strConfTemp = strConfTemp.Replace("{%DTSFile%}", pathDtsx);
 
-                Connections conns = getDTSConns(pathDtsx);
+                Connections conns = DtsUtils.getDTSConns(pathDtsx);
                 foreach (ConnectionManager cm in conns)
                 {
                     strConfTemp += Environment.NewLine + "/CIMBCONN#" + cm.Name + @"#D:\CIMB\DownloadJobs\master.conf";
@@ -259,21 +259,5 @@ namespace SSISHelper
         {
             return Path.Combine(pathDirLogs, dtsName + ".log");
         }
-
-        private Connections getDTSConns(String pkgLocation)
-        {
-
-            Microsoft.SqlServer.Dts.Runtime.Application app = new Microsoft.SqlServer.Dts.Runtime.Application();
-            Package pkg = app.LoadPackage(pkgLocation, null);
-
-            Connections conns = pkg.Connections;
-            foreach (ConnectionManager cm in conns)
-            {
-                Console.WriteLine("Name = " + cm.Name + ", HostType = " + cm.HostType + "; ConnectionString=" + cm.ConnectionString);
-            }
-
-            return conns;
-        }
-
     }
 }
